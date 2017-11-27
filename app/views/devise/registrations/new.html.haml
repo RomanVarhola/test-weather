@@ -1,0 +1,37 @@
+﻿.row
+  .col-sm-4.col-sm-offset-4
+    .panel.panel-default
+      .panel-heading
+        %h3 Sign up
+      .panel-body
+        = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+          - if resource.errors.any?
+            .alert.alert-danger
+              %ul
+                - resource.errors.full_messages.each do |msg|
+                  %li= msg
+          .form-group
+            = f.label :first_name
+            %br/
+            = f.text_field :first_name, class: 'form-control', autofocus: true
+          .form-group
+            = f.label :last_name
+            %br/
+            = f.text_field :last_name, class: 'form-control'
+          .form-group
+            = f.label :email
+            %br/
+            = f.email_field :email, class: 'form-control'
+          .form-group
+            = f.label :password
+            = f.password_field :password, class: 'form-control', autocomplete: "off"
+          .form-group
+            = f.label :password_confirmation
+            %br/
+            = f.password_field :password_confirmation, class: 'form-control', autocomplete: "off"
+          .form-group
+            = f.submit 'Sign up', class: 'btn btn-block btn-primary'
+      .panel-footer
+        Already have an account?
+        \#{link_to "Log in", new_session_path(resource_name)}
+        %br/

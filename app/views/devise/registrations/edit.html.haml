@@ -1,0 +1,42 @@
+.row
+  .col-md-6.col-md-offset-3
+    = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+      - if resource.errors.any?
+        .alert.alert-danger
+          %ul
+            - resource.errors.full_messages.each do |msg|
+              %li= msg
+      .panel.panel-primary
+        .panel-heading Edit #{resource_name.to_s.humanize}
+        .panel-body
+          .control-group
+            = f.label :email
+            .controls
+              = f.email_field :email, autofocus: true, class: 'form-control'
+          .control-group
+            = f.label :first_name
+            .controls
+              = f.text_field :first_name, class: 'form-control'
+          .control-group
+            = f.label :last_name
+            .controls
+              = f.text_field :last_name, class: 'form-control'
+          .control-group
+            = f.label :city
+            .controls
+              = f.text_field :city, class: 'form-control'
+          .control-group
+            = f.label :password
+            .controls
+              = f.password_field :password, autocomplete: "off", class: 'form-control'
+            .control-group
+            = f.label :password_confirmation
+            .controls
+              = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+          .control-group
+            = f.label :current_password
+            .controls
+              = f.password_field :current_password, autocomplete: "off", class: 'form-control'
+      .panel.panel-primary
+        .panel-body
+          = f.submit 'Save', class: "btn btn-block btn-primary"

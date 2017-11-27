@@ -1,0 +1,18 @@
+base: &base
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  database: weather
+  username: postgres
+  password: password
+  pool: 25
+
+test:
+  <<: *base
+
+development:
+  <<: *base
+
+production:
+  <<: *base
+
