@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Homes", type: :feature do
+RSpec.describe "Forecasts", type: :feature do
   describe "User as guest" do
     
     it "should visit login_path" do
@@ -16,7 +16,7 @@ RSpec.describe "Homes", type: :feature do
     end
 
     it "shoudn't see select-form .day" do
-      visit homes_path
+      visit root_path
       expect(page).to_not have_css('.day')
     end
   end
@@ -34,7 +34,7 @@ RSpec.describe "Homes", type: :feature do
     }
 
     it "shoud see select-form #day" do
-      @session.visit homes_path
+      @session.visit root_path
       expect(@session).to have_css('#day')
     end
   end
