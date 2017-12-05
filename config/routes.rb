@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  resources :locations
-  resources :homes, only: :index 
+  resources :forecasts, only: [:index, :create, :destroy]
   devise_for :users
-  root to: 'homes#index'
+  root to: 'forecasts#index'
 end

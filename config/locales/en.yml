@@ -1,2 +1,5 @@
 en:
-  hello: "Hello world"
+  weather:
+    summer: 'Wear shorts and a t-shirt'
+    winter: 'Wear winter clothes'
+    autumn: 'Wear a light autumn coat'

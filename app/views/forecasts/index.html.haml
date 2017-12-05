@@ -1,0 +1,74 @@
+- if notice
+  .alert.alert-success
+    %p#notice= notice
+
+%p#demo
+
+- if current_user && @forecast
+  #weather-info
+    .alert.alert-success
+      #{@forecast.address}.
+      %br
+      #{@forecast.date}.
+      %br
+      Temperature: #{@forecast.temperature} C.
+      %br
+      = show_advice(@forecast.temperature)
+      %br
+      = @forecast.description
+- elsif @latitude && @longitude && @date
+  #weather-info
+    .alert.alert-success
+      #{@address}.
+      %br
+      #{@date}.
+      %br
+      Temperature: #{@temperature} C.
+      %br
+      = show_advice(@temperature)
+      %br
+      = @description
+
+- if current_user
+  .row
+    .col-md-5.col-md-offset-3
+      #user-search-form
+        = form_for Forecast.new do |f|
+          = label_tag 'Search'
+          = text_field_tag :search, params[:search], class: 'form-control'
+          %br
+          = label_tag 'Choose day'
+          = select_tag :day, options_for_select((0...10).map {|d| [DateTime.now.to_date + d, d]}, params[:day])
+          %br
+          = submit_tag 'Search', class: 'btn btn-primary'
+- else
+  .row
+    .col-md-5.col-md-offset-3
+      #search-form
+        = form_tag root_path, method: :get do |f|
+          = label_tag 'Search'
+          = text_field_tag :search, params[:search], class: 'form-control'
+          %br
+          = submit_tag 'Search', class: 'btn btn-primary'
+
+- if current_user && @forecasts.present?
+  .row
+    %h1 Forecasts
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th Date
+          %th Temperature
+          %th Address
+          %th Description
+          %th Created_at
+          %th 
+      %tbody
+        - @forecasts.each do |forecast|
+          %tr
+            %td= forecast.date
+            %td= forecast.temperature
+            %td= forecast.address 
+            %td= forecast.description
+            %td= forecast.created_at
+            %td= link_to 'Destroy', forecast_path(forecast), method: :delete, class: 'btn btn-primary'
