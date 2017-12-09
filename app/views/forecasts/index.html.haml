@@ -16,7 +16,7 @@
       = show_advice(@forecast.temperature)
       %br
       = @forecast.description
-- elsif @latitude && @longitude && @date
+- elsif @date && @address && @temperature
   #weather-info
     .alert.alert-success
       #{@address}.

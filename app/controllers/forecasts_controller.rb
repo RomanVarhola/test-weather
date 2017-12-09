@@ -20,17 +20,13 @@ class ForecastsController < ApplicationController
   end
 
   def create
-    @forecast = current_user.forecasts.new
-    forecast_params
-
-    respond_to do |format|
-      if @forecast.save
-        format.html { redirect_to root_path, notice: 'Forecast was created.' }
-        format.json { render :show, status: :created, location: @forecast }
-      else
-        format.html { redirect_to root_path, notice: "Forecast wasn't created." }
-        format.json { render json: @forecast.errors, status: :unprocessable_entity }
-      end
+    begin
+      CreateForecast.new(current_user, params, cookies).call
+      flash[:notice] = 'Forecast was successfully created.'
+      redirect_to root_path
+    rescue Exception => e
+      flash[:notice] = e.message
+      redirect_to root_path
     end
   end
 
@@ -46,28 +42,6 @@ class ForecastsController < ApplicationController
     
     def set_forecast
       @forecast = current_user.forecasts.find(params[:id])
-    end
-
-    def forecast_params
-      if params[:search].present?
-        sl = SearchLocation.new(params[:search])
-        @forecast.address = params[:search]
-        @latitude = sl.latitude
-        @longitude = sl.longitude
-        @day = params[:day].to_i
-      elsif cookies[:lat].present? && cookies[:lng].present?
-        @latitude = cookies[:lat].to_f
-        @longitude = cookies[:lng].to_f
-        @forecast.address = GetAddress.new(@latitude, @longitude).address
-        @day = current_user ? params[:day].to_i : 0
-      end
-
-      if @latitude && @longitude
-        weather = GetWeather.new(@latitude, @longitude, @day)
-        @forecast.temperature = weather.temperature
-        @forecast.description = weather.description
-        @forecast.date = weather.date
-      end
     end
 
     def search_params
