@@ -10,7 +10,7 @@ class CreateForecast
   def call
     @forecast = current_user.forecasts.new
     forecast_params
-    raise(NotValidEntryRecord, @forecast.errors.full_messages.to_sentence) unless @forecast.save  
+    raise ArgumentError.new(@forecast), @forecast.errors.full_messages.to_sentence unless @forecast.save
   end
 
   def forecast_params

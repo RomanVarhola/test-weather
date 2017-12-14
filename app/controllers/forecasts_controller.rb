@@ -22,9 +22,9 @@ class ForecastsController < ApplicationController
   def create
     begin
       CreateForecast.new(current_user, params, cookies).call
-      flash[:notice] = 'Forecast was successfully created.'
+      flash[:notice] = I18n.t('forecast.created')
       redirect_to root_path
-    rescue Exception => e
+    rescue ArgumentError => e
       flash[:notice] = e.message
       redirect_to root_path
     end
@@ -33,7 +33,7 @@ class ForecastsController < ApplicationController
   def destroy
     @forecast.destroy
     respond_to do |format|
-      format.html { redirect_to forecasts_url, notice: 'Forecast was destroyed.' }
+      format.html { redirect_to forecasts_url, notice: I18n.t('forecast.destroyed') }
       format.json { head :no_content }
     end
   end
@@ -55,7 +55,11 @@ class ForecastsController < ApplicationController
     def cookies_params
       @latitude = cookies[:lat].to_f
       @longitude = cookies[:lng].to_f
-      @address = GetAddress.new(@latitude, @longitude).address
       @day = 0
+      begin
+        @address = GetAddress.new(@latitude, @longitude).address
+      rescue ArgumentError => e
+        flash[:notice] = e.message
+      end
     end
 end

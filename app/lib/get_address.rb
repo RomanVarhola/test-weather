@@ -13,6 +13,9 @@ class GetAddress
   end
 
   def address
-    @address ||= location.first[1][1].dig("address_components")[2].dig("long_name") + ', ' + location.first[1][1].dig("address_components")[0].dig("long_name") unless location.dig('error_message').present?
+    @address ||= begin
+      raise ArgumentError.new(I18n.t('address.error_show')) unless location.is_a?(Hash) && !(location.dig('error_message').present?)
+      location.first[1][1].dig("address_components")[2].dig("long_name") + ', ' + location.first[1][1].dig("address_components")[0].dig("long_name")
+    end
   end
 end

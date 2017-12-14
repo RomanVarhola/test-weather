@@ -1,5 +1,12 @@
 en:
   weather:
-    summer: 'Wear shorts and a t-shirt'
-    winter: 'Wear winter clothes'
-    autumn: 'Wear a light autumn coat'
+    summer: 'Wear shorts and a t-shirt.'
+    winter: 'Wear winter clothes.'
+    autumn: 'Wear a light autumn coat.'
+  forecast:
+    not_created: Forecast wasn't created.
+    created: 'Forecast was successfully created.'
+    destroyed: 'Forecast was successfully destroyed.'
+    temperature: 'Temperature:'
+  address:
+    error_show: Address doesn't show. Please, reload page.

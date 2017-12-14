@@ -1,33 +1,40 @@
-- if notice
-  .alert.alert-success
-    %p#notice= notice
+.row
+  .col-md-6
+    %p#demo
 
-%p#demo
+  - if notice
+    .col-md-6
+      .alert.alert-success
+        %p#notice= notice
 
 - if current_user && @forecast
   #weather-info
-    .alert.alert-success
-      #{@forecast.address}.
-      %br
-      #{@forecast.date}.
-      %br
-      Temperature: #{@forecast.temperature} C.
-      %br
-      = show_advice(@forecast.temperature)
-      %br
-      = @forecast.description
+    .row
+      .col-md-12
+        .alert.alert-success
+          #{@forecast.address}.
+          %br
+          #{@forecast.date}.
+          %br
+          #{t('forecast.temperature')} #{@forecast.temperature} C.
+          %br
+          = show_advice(@forecast.temperature)
+          %br
+          = @forecast.description
 - elsif @date && @address && @temperature
   #weather-info
-    .alert.alert-success
-      #{@address}.
-      %br
-      #{@date}.
-      %br
-      Temperature: #{@temperature} C.
-      %br
-      = show_advice(@temperature)
-      %br
-      = @description
+    .row
+      .col-md-12
+        .alert.alert-success
+          #{@address}.
+          %br
+          #{@date}.
+          %br
+          #{t('forecast.temperature')} #{@temperature} C.
+          %br
+          = show_advice(@temperature)
+          %br
+          = @description
 
 - if current_user
   .row
